@@ -1,16 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.htv</groupId>
-  <artifactId>tech-forge</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <!-- Aggregator thuần: chỉ liệt kê module, không cấu hình build.
+         Không có parent để tránh vòng (bom/parent nằm trong reactor này). -->
+    <groupId>com.htv</groupId>
+    <artifactId>tech-forge</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
 
-  <name>tech-forge</name>
-  <url>http://maven.apache.org</url>
+    <name>tech-forge</name>
+    <description>Root aggregator của nền tảng microservice tech-forge</description>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <revision>1.0.0-SNAPSHOT</revision>
+    </properties>
+
+    <modules>
+        <!-- 1. Platform -->
+        <module>platform/bom</module>
+        <module>platform/parent</module>
+        <!-- 2. Contracts (không phụ thuộc module nội bộ nào) -->
+        <module>contracts/api-model</module>
+        <module>contracts/grpc-contract</module>
+        <!-- 3. Shared libraries -->
+        <module>shared/shared-common</module>
+        <module>shared/shared-auth</module>
+        <module>shared/shared-event</module>
+        <module>shared/shared-test</module>
+        <!-- 4. Spring Boot starters (auto-configuration) -->
+        <module>starters/cached-starter</module>
+        <module>starters/grpc-starter</module>
+        <module>starters/security-starter</module>
+        <module>starters/tracing-starter</module>
+        <!-- 5. Runnable -->
+        <module>apps/gateway</module>
+        <module>services</module>
+    </modules>
 </project>

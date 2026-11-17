@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Chuỗi kế thừa: spring-boot-starter-parent -> tech-forge-bom -> tech-forge-parent -> module.
+         Mọi version (thư viện + plugin) chỉ khai báo MỘT lần ở đây hoặc ở tech-forge-parent. -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.0.9</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.htv</groupId>
+    <artifactId>tech-forge-bom</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <name>tech-forge-bom</name>
+    <description>Bill of Materials: quản lý version tập trung cho toàn bộ nền tảng tech-forge</description>
+
+    <properties>
+        <!-- CI-friendly version: đổi bản phát hành bằng -Drevision=x.y.z (mặc định ở .mvn/maven.config) -->
+        <revision>1.0.0-SNAPSHOT</revision>
+
+        <java.version>17</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+
+        <!-- Spring Cloud 2025.1.x (Oakwood) là release train GA tương thích Spring Boot 4.0.x.
+             Release train 2026.0 (Boot 4.1) hiện mới ở RC nên chưa dùng. -->
+        <spring-cloud.version>2025.1.4</spring-cloud.version>
+
+        <grpc.version>1.85.1</grpc.version>
+        <protobuf.version>4.36.2</protobuf.version>
+
+        <!-- grpc 1.85 cần gson >= 2.14 (Boot 4.0.9 pin 2.13.2) và guava bản -jre (grpc kéo bản -android).
+             Ghi đè property của Boot để dependencyManagement của Boot cũng đổi theo. Xem lại khi nâng Boot. -->
+        <gson.version>2.14.0</gson.version>
+        <guava.version>33.6.0-jre</guava.version>
+        <!-- swagger-core (springdoc 3.0.x) cần commons-lang3 >= 3.20 -->
+        <commons-lang3.version>3.20.0</commons-lang3.version>
+
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+        <springdoc.version>3.0.3</springdoc.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Boot BOM đã kế thừa từ spring-boot-starter-parent -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- protobuf-bom đặt TRƯỚC grpc-bom: ép protobuf-java 4.x thay cho 3.25.x mà grpc-protobuf kéo theo -->
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-bom</artifactId>
+                <version>${protobuf.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-bom</artifactId>
+                <version>${grpc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Thư viện ngoài chưa có trong các BOM trên -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+
+            <!-- Module nội bộ -->
+            <dependency>
+                <groupId>com.htv</groupId>
+                <artifactId>api-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.htv</groupId>
+                <artifactId>grpc-contract</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.htv</groupId>
+                <artifactId>shared-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.htv</groupId>
+                <artifactId>shared-auth</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.htv</groupId>
+                <artifactId>shared-event</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.htv</groupId>
+                <artifactId>shared-test</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.htv</groupId>
+                <artifactId>cached-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.htv</groupId>
+                <artifactId>grpc-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.htv</groupId>
+                <artifactId>security-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.htv</groupId>
+                <artifactId>tracing-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <!-- Thay ${revision} bằng giá trị thật trong pom được install/deploy (bắt buộc với CI-friendly version).
+                 Khai báo ở BOM nên được kế thừa bởi parent và mọi module. -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.9.0</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten-clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
