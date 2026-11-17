@@ -28,6 +28,7 @@
         <module>shared/shared-common</module>
         <module>shared/shared-auth</module>
         <module>shared/shared-event</module>
+        <module>shared/shared-persistence</module>
         <module>shared/shared-test</module>
         <!-- 4. Spring Boot starters (auto-configuration) -->
         <module>starters/cached-starter</module>

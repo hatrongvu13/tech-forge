@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package htv.identity.v1;
+
+option java_multiple_files = true;
+
+option java_package = "com.htv.contract.order.v1";

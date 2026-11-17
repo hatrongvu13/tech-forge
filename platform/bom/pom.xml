@@ -117,6 +117,11 @@
             </dependency>
             <dependency>
                 <groupId>com.htv</groupId>
+                <artifactId>shared-persistence</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.htv</groupId>
                 <artifactId>shared-test</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -143,35 +148,4 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <plugins>
-            <!-- Thay ${revision} bằng giá trị thật trong pom được install/deploy (bắt buộc với CI-friendly version).
-                 Khai báo ở BOM nên được kế thừa bởi parent và mọi module. -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <version>1.9.0</version>
-                <configuration>
-                    <updatePomFile>true</updatePomFile>
-                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>flatten</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>flatten-clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>
