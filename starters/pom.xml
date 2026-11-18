@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Kho starter: aggregator + parent chung của mọi starter đơn.
+         Luật phụ thuộc nằm ở đây, nên mọi starter đơn đều bị kiểm. -->
+    <parent>
+        <groupId>com.htv</groupId>
+        <artifactId>tech-forge-parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../platform/parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>starters</artifactId>
+    <packaging>pom</packaging>
+    <name>starters</name>
+    <description>Kho starter: starter đơn (mỗi công nghệ một cái) và starter nhóm (bundles/)</description>
+
+    <modules>
+        <module>cached-starter</module>
+        <module>grpc-starter</module>
+        <module>jpa-starter</module>
+        <module>security-starter</module>
+        <module>tracing-starter</module>
+        <module>bundles</module>
+    </modules>
+
+    <dependencies>
+        <!-- Mọi starter phải có test khởi động riêng (ApplicationContextRunner) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-starter-rules</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <!-- Luật 1: starter KHÔNG được phụ thuộc service hay app.
+                                     Luật 2: starter đơn KHÔNG phụ thuộc starter đơn khác, trừ core-starter.
+                                     Chỉ được phụ thuộc shared-*, contracts/* và thư viện bên ngoài. -->
+                                <bannedDependencies>
+                                    <searchTransitive>true</searchTransitive>
+                                    <excludes>
+                                        <exclude>com.htv:*-service</exclude>
+                                        <exclude>com.htv:services</exclude>
+                                        <exclude>com.htv:gateway</exclude>
+                                        <exclude>com.htv:*-starter</exclude>
+                                    </excludes>
+                                    <includes>
+                                        <include>com.htv:core-starter</include>
+                                    </includes>
+                                    <message>Starter chỉ được phụ thuộc shared-*, contracts/* và core-starter (xem starters/README.md)</message>
+                                </bannedDependencies>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

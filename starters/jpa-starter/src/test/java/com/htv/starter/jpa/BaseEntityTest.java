@@ -1,4 +1,4 @@
-package com.htv.shared.persistence;
+package com.htv.starter.jpa;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,9 +11,12 @@ class BaseEntityTest {
     static class Foo extends AuditableEntity {
     }
 
+    static class Log extends AppendOnlyEntity {
+    }
+
     private static Foo withId(UUID id) throws Exception {
         Foo f = new Foo();
-        Field field = BaseEntity.class.getDeclaredField("id");
+        Field field = IdentifiedEntity.class.getDeclaredField("id");
         field.setAccessible(true);
         field.set(f, id);
         return f;
@@ -41,5 +44,14 @@ class BaseEntityTest {
         assertThat(f.getUpdatedAt()).isNull();
         assertThat(f.getCreatedBy()).isNull();
         assertThat(f.getUpdatedBy()).isNull();
+    }
+
+    @Test
+    void appendOnlyEntityHasNoAuditUpdateFields() throws Exception {
+        Log log = new Log();
+        assertThat(log.isNew()).isTrue();
+        assertThat(log.getCreatedAt()).isNull();
+        assertThat(log).isEqualTo(log).isNotEqualTo(new Log());
+        assertThat(Log.class.getSuperclass().getSuperclass()).isEqualTo(IdentifiedEntity.class);
     }
 }

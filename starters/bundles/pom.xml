@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Starter nhóm: chỉ gom dependency của starter đơn. Parent là tech-forge-parent chứ KHÔNG phải
+         starters, vì luật "starter không phụ thuộc starter khác" không áp dụng cho nhóm. -->
+    <parent>
+        <groupId>com.htv</groupId>
+        <artifactId>tech-forge-parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../../platform/parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>bundles</artifactId>
+    <packaging>pom</packaging>
+    <name>bundles</name>
+    <description>Starter nhóm theo tổ hợp công nghệ. Thêm module ở M8.</description>
+
+    <!-- Chưa có nhóm nào: các nhóm được tạo ở mốc M8 -->
+</project>

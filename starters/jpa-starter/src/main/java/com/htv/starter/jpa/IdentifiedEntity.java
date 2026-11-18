@@ -1,46 +1,30 @@
-package com.htv.shared.persistence;
+package com.htv.starter.jpa;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Version;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
+
+import lombok.Getter;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.UuidGenerator;
 
 /**
- * Gốc của mọi entity: khóa chính UUID v7 (tăng dần theo thời gian, index thân thiện) và
- * optimistic lock.
- *
- * <p>Cột SQL tương ứng:
- * <pre>
- * id      uuid   PRIMARY KEY,
- * version bigint NOT NULL DEFAULT 0
- * </pre>
+ * Gốc chung có khóa chính UUID v7 (tăng dần theo thời gian, index thân thiện).
+ * Dùng qua {@link BaseEntity} (bảng thường) hoặc {@link AppendOnlyEntity} (bảng chỉ thêm).
  *
  * <p>equals/hashCode dựa trên {@code id}; entity chưa lưu (id == null) chỉ bằng chính nó.
  */
+@Getter
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable {
+public abstract class IdentifiedEntity implements Serializable {
 
     @Id
     @UuidGenerator(style = UuidGenerator.Style.VERSION_7)
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
-
-    @Version
-    @Column(name = "version", nullable = false)
-    private long version;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public long getVersion() {
-        return version;
-    }
 
     public boolean isNew() {
         return id == null;
@@ -54,7 +38,7 @@ public abstract class BaseEntity implements Serializable {
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
             return false;
         }
-        BaseEntity other = (BaseEntity) o;
+        IdentifiedEntity other = (IdentifiedEntity) o;
         return id != null && Objects.equals(id, other.id);
     }
 

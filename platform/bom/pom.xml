@@ -117,7 +117,7 @@
             </dependency>
             <dependency>
                 <groupId>com.htv</groupId>
-                <artifactId>shared-persistence</artifactId>
+                <artifactId>jpa-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

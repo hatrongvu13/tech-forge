@@ -1,9 +1,11 @@
-package com.htv.shared.persistence;
+package com.htv.starter.jpa;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import java.time.Instant;
+
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -24,6 +26,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  * <p>{@code created_by}/{@code updated_by} chỉ có giá trị khi service khai báo bean
  * {@code AuditorAware<String>}; nếu không, hai cột này để null.
  */
+@Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditableEntity extends BaseEntity {
@@ -44,19 +47,4 @@ public abstract class AuditableEntity extends BaseEntity {
     @Column(name = "updated_by", length = 100)
     private String updatedBy;
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
 }

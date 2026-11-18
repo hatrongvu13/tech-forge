@@ -5,9 +5,9 @@
 
     <parent>
         <groupId>com.htv</groupId>
-        <artifactId>tech-forge-parent</artifactId>
+        <artifactId>starters</artifactId>
         <version>${revision}</version>
-        <relativePath>../../platform/parent/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>cached-starter</artifactId>

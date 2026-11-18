@@ -28,13 +28,9 @@
         <module>shared/shared-common</module>
         <module>shared/shared-auth</module>
         <module>shared/shared-event</module>
-        <module>shared/shared-persistence</module>
         <module>shared/shared-test</module>
-        <!-- 4. Spring Boot starters (auto-configuration) -->
-        <module>starters/cached-starter</module>
-        <module>starters/grpc-starter</module>
-        <module>starters/security-starter</module>
-        <module>starters/tracing-starter</module>
+        <!-- 4. Kho starter (starter đơn + starter nhóm) -->
+        <module>starters</module>
         <!-- 5. Runnable -->
         <module>apps/gateway</module>
         <module>services</module>
