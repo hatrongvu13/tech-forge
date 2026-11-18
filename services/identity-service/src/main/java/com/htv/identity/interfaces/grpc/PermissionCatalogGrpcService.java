@@ -8,7 +8,6 @@ import com.htv.identity.application.usecase.RegisterPermissionCatalogUseCase;
 import com.htv.identity.application.usecase.RegisterPermissionCatalogUseCase.Command;
 import com.htv.identity.application.usecase.RegisterPermissionCatalogUseCase.Definition;
 import com.htv.identity.application.usecase.RegisterPermissionCatalogUseCase.Result;
-import com.htv.identity.infrastructure.config.IdentityCatalogProperties;
 import com.htv.shared.common.BusinessException;
 import com.htv.shared.common.CommonErrorCode;
 import com.htv.starter.core.ContextValues;
@@ -17,6 +16,8 @@ import io.grpc.stub.StreamObserver;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Component;
  * {@code htv.identity.catalog.trust-request-body=true} (bị cấm ở profile {@code prod}).
  */
 @Component
+@EnableConfigurationProperties(IdentityCatalogProperties.class)
 public class PermissionCatalogGrpcService extends PermissionCatalogServiceGrpc.PermissionCatalogServiceImplBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(PermissionCatalogGrpcService.class);
@@ -35,7 +37,8 @@ public class PermissionCatalogGrpcService extends PermissionCatalogServiceGrpc.P
     private final IdentityCatalogProperties properties;
 
     public PermissionCatalogGrpcService(RegisterPermissionCatalogUseCase useCase,
-                                        IdentityCatalogProperties properties) {
+                                        IdentityCatalogProperties properties, Environment environment) {
+        properties.validate(environment); // cờ dev bị cấm ở prod: không khởi động
         this.useCase = useCase;
         this.properties = properties;
     }

@@ -4,6 +4,7 @@ import com.htv.api.model.BaseResponse;
 import com.htv.shared.common.BusinessException;
 import com.htv.shared.common.CommonErrorCode;
 import com.htv.shared.common.ErrorCode;
+import com.htv.starter.core.LogMasker;
 import jakarta.validation.ConstraintViolationException;
 
 import java.util.List;
@@ -41,9 +42,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<BaseResponse<Void>> handleBusiness(BusinessException ex) {
         ErrorCode code = ex.getErrorCode();
         if (code.httpStatus() >= 500) {
-            log.error("Business error {}: {}", code.code(), ex.getMessage(), ex);
+            log.error("Business error {}: {}", code.code(), LogMasker.mask(ex.getMessage()), ex);
         } else {
-            log.warn("Business error {}: {}", code.code(), ex.getMessage());
+            log.warn("Business error {}: {}", code.code(), LogMasker.mask(ex.getMessage()));
         }
         return respond(code.httpStatus(), ApiResponses.error(code));
     }
@@ -65,6 +66,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
         if (isInHierarchy(ex, "org.springframework.security.core.AuthenticationException")) {
             return respond(401, ApiResponses.error(CommonErrorCode.UNAUTHORIZED));
+        }
+        // Feign không kết nối được / hết thời gian (I/O): service phía sau không sẵn sàng.
+        if (isInHierarchy(ex, "feign.RetryableException")) {
+            log.warn("Downstream call failed: {}", ex.getClass().getSimpleName());
+            return respond(503, ApiResponses.error(CommonErrorCode.SERVICE_UNAVAILABLE));
         }
         log.error("Unexpected error", ex);
         return respond(500, ApiResponses.error(CommonErrorCode.INTERNAL_ERROR));

@@ -57,7 +57,8 @@ public class SecurityAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(SecurityFilterChain.class)
     SecurityFilterChain htvSecurityFilterChain(HttpSecurity http, SecurityProperties properties,
-                                               ObjectProvider<JwtDecoder> jwtDecoder) throws Exception {
+                                               ObjectProvider<JwtDecoder> jwtDecoder, Environment environment)
+            throws Exception {
         boolean jwt = jwtDecoder.getIfAvailable() != null;
         ApiAuthenticationEntryPoint entryPoint = new ApiAuthenticationEntryPoint();
         ApiAccessDeniedHandler deniedHandler = new ApiAccessDeniedHandler();
@@ -67,6 +68,8 @@ public class SecurityAutoConfiguration {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(e -> e.authenticationEntryPoint(entryPoint).accessDeniedHandler(deniedHandler))
                 .authorizeHttpRequests(a -> {
+                    // cổng quản trị riêng (probe, Prometheus): không đưa ra ngoài nên không đòi JWT
+                    a.requestMatchers(new ManagementPortRequestMatcher(environment)).permitAll();
                     if (publicPaths.length > 0) {
                         a.requestMatchers(publicPaths).permitAll();
                     }

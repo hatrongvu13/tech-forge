@@ -76,4 +76,13 @@ class AccessLogFilterTest {
         assertThat(appender.list).hasSize(1);
         assertThat(appender.list.get(0).getFormattedMessage()).contains("-> 500").contains("userId=- ");
     }
+
+    @Test
+    void pathIsMaskedBeforeLogging() throws Exception {
+        String jwt = "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMjM0NTYifQ.c2lnbmF0dXJlLXZhbHVl";
+        MockMvc mvc = MockMvcBuilders.standaloneSetup(new WebFixtures.TestController())
+                .addFilters(new AccessLogFilter(List.of())).build();
+        mvc.perform(get("/t/magic/" + jwt));
+        assertThat(appender.list.get(0).getFormattedMessage()).contains("/t/magic/***").doesNotContain(jwt);
+    }
 }

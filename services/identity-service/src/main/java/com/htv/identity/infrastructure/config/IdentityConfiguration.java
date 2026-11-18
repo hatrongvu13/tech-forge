@@ -14,17 +14,11 @@ import java.util.Set;
 import java.util.UUID;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties(IdentityCatalogProperties.class)
 public class IdentityConfiguration {
 
-    IdentityConfiguration(IdentityCatalogProperties catalogProperties, Environment environment) {
-        catalogProperties.validate(environment);
-    }
 
     @Bean
     @ConditionalOnMissingBean

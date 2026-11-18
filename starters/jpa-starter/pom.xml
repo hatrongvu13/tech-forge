@@ -19,6 +19,11 @@
             <groupId>com.htv</groupId>
             <artifactId>shared-common</artifactId>
         </dependency>
+        <!-- PageResponse (Pages.toResponse) -->
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>api-model</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>

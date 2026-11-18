@@ -13,6 +13,11 @@ import org.springframework.core.task.TaskDecorator;
 @EnableConfigurationProperties(CoreProperties.class)
 public class CoreAutoConfiguration {
 
+    /** Nạp mẫu che log của service. Mẫu sai cú pháp làm service không khởi động. */
+    CoreAutoConfiguration(CoreProperties properties) {
+        LogMasker.configure(properties.getLog().getMaskPatterns());
+    }
+
     /** Spring Boot tự gắn bean {@link TaskDecorator} vào executor mặc định của {@code @Async}. */
     @Bean
     @ConditionalOnMissingBean(TaskDecorator.class)

@@ -42,6 +42,7 @@ Bảng lỗi:
 | JSON hỏng, thiếu tham số | 400 | `COMMON-4000` |
 | Sai method / sai media type | 405 / 415 | `COMMON-4050` / `COMMON-4150` |
 | `AccessDeniedException` / `AuthenticationException` của Spring Security | 403 / 401 | `COMMON-4030` / `COMMON-4010` |
+| Feign không kết nối được / hết giờ (`feign.RetryableException`) | 503 | `COMMON-5030` |
 | Lỗi không lường trước | 500 | `COMMON-5000`, **không** lộ chi tiết |
 
 ## Cấu hình
@@ -70,6 +71,6 @@ Hệ quả: lúc filter chạy, JWT chưa được xác thực nên `userId` ch�
 
 ## Ghi chú
 
-- Trace id lấy theo thứ tự: MDC do Micrometer đặt (khi có `tracing-starter`), header `traceparent`, `X-Trace-Id`, tự sinh. Giá trị từ client chỉ nhận khi gồm `[A-Za-z0-9._-]`, tối đa 64 ký tự (chống chèn log).
+- Trace id lấy theo thứ tự: MDC do Micrometer đặt (khi có `tracing-starter`), header `traceparent`, `X-Trace-Id`, tự sinh. **Có `tracing-starter` thì `X-Trace-Id` client tự gửi bị bỏ qua**; muốn nối trace thì gửi `traceparent` (W3C). Giá trị từ client chỉ nhận khi gồm `[A-Za-z0-9._-]`, tối đa 64 ký tự (chống chèn log).
 - Chưa kiểm springdoc 3.0.3 chạy thật trên Boot 4.0.9: test hiện chỉ kiểm cấu hình. Sẽ kiểm bằng service rỗng ở M8.
 - Ngữ cảnh không tự sang luồng tạo bằng `new Thread`. Dùng executor của Spring (đã có `ContextPropagatingTaskDecorator` từ `core-starter`).

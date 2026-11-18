@@ -26,6 +26,7 @@ public class Order extends AuditableEntity { /* chỉ khai báo cột nghiệp v
 | `BaseEntity` | `id` UUID v7, `@Version`. `equals/hashCode` theo `id` |
 | `AuditableEntity` | thêm `created_at`, `updated_at`, `created_by`, `updated_by` |
 | `JpaAutoConfiguration` | bật JPA auditing; `created_by/updated_by` lấy từ `ContextHolder` (userId) |
+| `Pages.toResponse(page, mapper)` | `Page<Entity>` của Spring Data thành `PageResponse<Dto>` (đặt trong `BaseResponse.data`) |
 | Spring Data JPA, Flyway, PostgreSQL | dependency đi kèm |
 
 Cột SQL: `BaseEntity` cần `id uuid PRIMARY KEY`, `version bigint NOT NULL`. `AuditableEntity` cần thêm `created_at timestamptz NOT NULL`, `updated_at timestamptz NOT NULL`, `created_by varchar(100)`, `updated_by varchar(100)`.
@@ -45,4 +46,4 @@ Khai báo bean `AuditorAware<?>` của riêng service, bean mặc định sẽ l
 ## Ghi chú
 
 - `created_by` rỗng nếu request không có userId trong `ContextHolder`.
-- Sắp có: `AppendOnlyEntity` (cho nhật ký kiểm toán) ở M2.
+- `AppendOnlyEntity`: lớp gốc cho bảng chỉ thêm (nhật ký kiểm toán): chỉ `id`, `created_at`.

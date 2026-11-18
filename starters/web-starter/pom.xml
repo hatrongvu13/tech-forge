@@ -46,5 +46,11 @@
             <artifactId>spring-security-core</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Test: kiểm nhận diện lỗi kết nối của Feign theo tên lớp (không phụ thuộc lúc chạy) -->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

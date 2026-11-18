@@ -1,6 +1,6 @@
 # Thiết kế: Kho starter theo nhóm và rà soát identity-service
 
-Trạng thái: **ĐÃ DUYỆT (bản 3)**. Đã làm M0 đến M6.
+Trạng thái: **ĐÃ DUYỆT (bản 3)**. Đã làm M0 đến M8.
 
 ## 0. Thay đổi so với bản 2
 
@@ -434,3 +434,39 @@ Phụ thuộc giữa các mốc: M0 → M1 → M2. M3, M4 làm được song son
 3. **Quy tắc đồng bộ ở 3.5:** tên service lấy từ CN chứng chỉ; mã chỉ thuộc một service; mã biến mất thì `active=false` chứ không xóa; chỉ đăng ký một lần khi khởi động. Đồng ý?
 4. **Mã sai định dạng hoặc trùng làm service không khởi động** (fail-fast). Đồng ý?
 5. Duyệt thì mình bắt đầu từ **M0**, dừng sau mỗi mốc để bạn xem trước khi sang mốc kế.
+
+## 9. Kết quả triển khai (đối chiếu bản 3)
+
+Kiểm bằng `mvn clean verify -Pci` toàn reactor (gồm test trên PostgreSQL, Redis thật và mTLS thật).
+
+| Mục thiết kế | Trạng thái | Ghi chú |
+|---|---|---|
+| 1.1 Sửa entity identity (11 điểm) | Xong | M2. Flyway V1/V2, Hibernate `validate` |
+| 1.2 `ErrorCode` interface, `BusinessException`, `ContextHolder`, `RequestContext` | Xong | M0 |
+| 1.2 `BaseResponse` factory | Xong | `ApiResponses` ở `web-starter` (vì `api-model` không được phụ thuộc `shared-common`) |
+| 1.2 `PageResponse<T>` | Xong | `api-model`; `Pages.toResponse(Page)` ở `jpa-starter` |
+| 1.2 Lombok `provided` một chỗ | Xong | `tech-forge-parent` |
+| 1.3 Bỏ 5 bảng phân quyền | Xong | M2 |
+| 2.1–2.4 Ba tầng, kho `starters/`, luật phụ thuộc | Xong | Enforcer chặn starter phụ thuộc service/app/starter khác |
+| 2.2 Starter đơn: core, web, security, tracing, grpc, cache, jpa, feign | Xong | Mỗi cái có README và test |
+| 2.2 `kafka-starter`, `webflux-starter` | **Chưa** (ngoài phạm vi, mục 6) | |
+| 2.3 Starter nhóm, service một dependency | Xong | M8. `EmptyServiceIT`, `EmptyFullServiceIT` |
+| 3.1 Ngữ cảnh qua REST, gRPC, Feign, `@Async` | Xong | |
+| 3.2 Lỗi thống nhất, mã lỗi đi xuyên service | Xong | HTTP body và trailer gRPC |
+| 3.3 Tin cậy: JWT ở biên, mTLS nội bộ, không tin `X-User-Id` | Xong | `MtlsTest` dùng chứng chỉ thật |
+| 3.4 Quyền tra từ cache, fail-closed, gộp yêu cầu trùng | Xong | M5 |
+| 3.5 Đồng bộ danh mục quyền | Xong | M6. 18 test trên DB thật |
+| 3.6 Các test bắt buộc | Xong | ArchUnit: `ArchitectureRules` ở `shared-test`, mỗi service một `ArchitectureTest` |
+| 3.7 Logging: một dòng mỗi request, không log body/header | Xong | |
+| 3.7 "Danh sách mask cấu hình được" | Xong | `LogMasker` ở `core-starter`, thêm mẫu bằng `htv.core.log.mask-patterns` |
+| Vận hành: probe K8s, cổng quản trị riêng, Prometheus, tắt êm | Xong | `tracing-starter` |
+
+### Còn thiếu so với bản đã duyệt
+
+1. **Gateway chưa có bảo mật thật:** `security-starter` chỉ chạy cho servlet, gateway là WebFlux. Cần `webflux-starter` (đã ghi là "sau" ở mục 4).
+
+ArchUnit đã bắt được một vi phạm thật khi chạy lần đầu: `interfaces.grpc` dùng lớp cấu hình ở `infrastructure.config`. Đã chuyển `IdentityCatalogProperties` về `interfaces.grpc`.
+
+### Ngoài phạm vi (mục 6), cần làm tiếp
+
+Đăng nhập, MFA, refresh token, **người dùng quản trị đầu tiên** (rủi ro 5), `kafka-starter`, `webflux-starter`, tách repo starter.

@@ -12,7 +12,7 @@
 
     <artifactId>shared-test</artifactId>
     <name>shared-test</name>
-    <description>Testcontainers dùng chung (PostgreSQL, Kafka, Redis). Chỉ khai báo scope test ở module sử dụng.</description>
+    <description>Testcontainers dùng chung (PostgreSQL, Kafka, Redis) và luật kiến trúc (ArchUnit). Chỉ khai báo scope test ở module sử dụng.</description>
 
     <dependencies>
         <dependency>
@@ -30,6 +30,11 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers-kafka</artifactId>
+        </dependency>
+        <!-- Luật kiến trúc dùng chung (ArchitectureRules) -->
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
         </dependency>
     </dependencies>
 </project>

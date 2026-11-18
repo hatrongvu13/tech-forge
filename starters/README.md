@@ -14,13 +14,14 @@ Thiết kế đầy đủ: `docs/thiet-ke-platform-starter.md`.
 
 Luật tầng 2 được Maven Enforcer kiểm trong `starters/pom.xml` (quy tắc `enforce-starter-rules`). Vi phạm thì build lỗi.
 
+Luật tầng **trong** mỗi service (`interfaces -> application -> domain`, `domain` không import Spring, service không import mã của nhau) được ArchUnit kiểm: `shared-test/.../ArchitectureRules`. Service mới thêm một `ArchitectureTest` gọi `ArchitectureRules.check("com.htv.<tên>")` và thêm gói vào `SERVICE_PACKAGES`.
+
 ## Starter hiện có
 
 | Starter | Trạng thái |
 |---|---|
-| `jpa-starter`, `core-starter`, `web-starter`, `grpc-starter`, `cached-starter`, `security-starter` | Có README, có test khởi động |
-| `tracing-starter` | Khung rỗng |
-| `feign-starter` | Chưa tạo (M7) |
+| `jpa-starter`, `core-starter`, `web-starter`, `grpc-starter`, `cached-starter`, `security-starter`, `feign-starter`, `tracing-starter` | Có README, có test |
+| Starter nhóm (`bundles/`) | Có README, có test service rỗng. Xem `bundles/README.md` |
 
 ## Thêm một starter mới
 

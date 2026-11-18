@@ -1,6 +1,7 @@
 package com.htv.starter.web;
 
 import com.htv.shared.common.ContextHolder;
+import com.htv.starter.core.LogMasker;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * Mỗi request một dòng: method, đường dẫn, status, thời gian, userId, traceId.
- * Không bao giờ ghi query string, body, hay header (kể cả Authorization).
+ * Không bao giờ ghi query string, body, hay header (kể cả Authorization). Đường dẫn được che qua {@link LogMasker}.
  */
 public class AccessLogFilter extends OncePerRequestFilter {
 
@@ -55,7 +56,7 @@ public class AccessLogFilter extends OncePerRequestFilter {
             throw t;
         } finally {
             long ms = (System.nanoTime() - start) / 1_000_000;
-            LOG.info("{} {} -> {} {}ms userId={} traceId={}", request.getMethod(), path(request), status, ms,
+            LOG.info("{} {} -> {} {}ms userId={} traceId={}", request.getMethod(), LogMasker.mask(path(request)), status, ms,
                     ContextHolder.userId().orElse("-"), ContextHolder.traceId().orElse("-"));
         }
     }

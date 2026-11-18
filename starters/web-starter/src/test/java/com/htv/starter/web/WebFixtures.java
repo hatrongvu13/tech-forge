@@ -58,6 +58,13 @@ final class WebFixtures {
             throw new org.springframework.security.authentication.BadCredentialsException("bad");
         }
 
+        @GetMapping("/downstream-down")
+        void downstreamDown() {
+            throw new feign.RetryableException(-1, "Connection refused: secret-host:5432", feign.Request.HttpMethod.GET,
+                    (Long) null, feign.Request.create(feign.Request.HttpMethod.GET, "http://secret-host",
+                            java.util.Map.of(), null, java.nio.charset.StandardCharsets.UTF_8, null));
+        }
+
         @PostMapping("/validate")
         Map<String, String> validate(@Valid @RequestBody Body body) {
             return Map.of("name", body.name());

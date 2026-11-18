@@ -14,7 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
  * Khởi động identity-service như một ứng dụng web servlet đầy đủ (security-starter, method security, gRPC,
  * Redis, PostgreSQL). Chưa cấu hình JWT nên mọi đường dẫn đều bị từ chối: đó là hành vi an toàn mặc định.
  */
-@SpringBootTest(properties = {"spring.datasource.password=unused", "htv.grpc.server.port=0"})
+@SpringBootTest(properties = {"spring.datasource.password=unused", "htv.grpc.server.port=0",
+        "management.server.port=0"})
 @AutoConfigureMockMvc
 class WebContextIT extends ContainersSupport {
 

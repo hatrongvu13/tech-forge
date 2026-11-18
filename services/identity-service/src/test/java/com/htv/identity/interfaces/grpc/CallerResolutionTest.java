@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 
 import com.htv.identity.application.usecase.RegisterPermissionCatalogUseCase;
-import com.htv.identity.infrastructure.config.IdentityCatalogProperties;
 import com.htv.shared.common.BusinessException;
 import com.htv.shared.common.CommonErrorCode;
 import java.util.Optional;
@@ -18,7 +17,7 @@ class CallerResolutionTest {
     private static PermissionCatalogGrpcService service(boolean trustBody) {
         IdentityCatalogProperties p = new IdentityCatalogProperties();
         p.setTrustRequestBody(trustBody);
-        return new PermissionCatalogGrpcService(mock(RegisterPermissionCatalogUseCase.class), p);
+        return new PermissionCatalogGrpcService(mock(RegisterPermissionCatalogUseCase.class), p, new MockEnvironment());
     }
 
     @Test
@@ -60,5 +59,15 @@ class CallerResolutionTest {
         p.validate(new MockEnvironment().withProperty("spring.profiles.active", "dev")); // dev: được
         IdentityCatalogProperties off = new IdentityCatalogProperties();
         off.validate(prod); // mặc định tắt: prod vẫn khởi động
+    }
+
+    @Test
+    void serviceRefusesToStartWithTheDevFlagInProd() {
+        IdentityCatalogProperties p = new IdentityCatalogProperties();
+        p.setTrustRequestBody(true);
+        MockEnvironment prod = new MockEnvironment();
+        prod.setActiveProfiles("prod");
+        assertThatThrownBy(() -> new PermissionCatalogGrpcService(mock(RegisterPermissionCatalogUseCase.class), p, prod))
+                .isInstanceOf(IllegalStateException.class);
     }
 }

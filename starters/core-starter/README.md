@@ -19,6 +19,7 @@ Thường không khai báo trực tiếp: đã có sẵn trong `web-starter` và
 |---|---|
 | `MdcContextBinder` | Đặt `RequestContext` vào `ContextHolder` và MDC (`traceId`, `spanId`, `userId`, `channel`), khôi phục khi đóng. Mọi cổng vào (filter, interceptor, listener) dùng lớp này |
 | `ContextPropagatingTaskDecorator` | Chép ngữ cảnh sang luồng `@Async`/executor và dọn sau khi chạy |
+| `LogMasker` | Che token Bearer, JWT, `password=`, `token=`, `secret=`, `api-key=`, `otp=` và mẫu riêng của service trước khi ghi log |
 | `CoreEnvironmentPostProcessor` | Profile `prod`: log JSON (`logging.structured.format.console=ecs`). Dev giữ log chữ |
 
 ## Cấu hình
@@ -26,6 +27,7 @@ Thường không khai báo trực tiếp: đã có sẵn trong `web-starter` và
 | Khóa | Kiểu | Mặc định | Ý nghĩa |
 |---|---|---|---|
 | `htv.core.enabled` | boolean | `true` | Tắt toàn bộ starter |
+| `htv.core.log.mask-patterns` | list (regex) | rỗng | Mẫu che thêm. Mẫu sai cú pháp: không khởi động. Regex có dấu phẩy thì viết dạng danh sách YAML |
 | `logging.structured.format.console` | string | `ecs` ở profile `prod` | Chuẩn của Spring Boot. Ghi trong `application.yml` thì thắng mặc định |
 
 ## Dùng `MdcContextBinder`
@@ -37,6 +39,18 @@ try (MdcContextBinder.Scope scope = MdcContextBinder.open(context)) {
 ```
 
 Có userId sau khi xác thực: `MdcContextBinder.update(contextMoi)` trong cùng phạm vi.
+
+## Che log
+
+```yaml
+htv.core.log.mask-patterns:
+  - "/reset-password/[^/]+"     # che token trong đường dẫn
+  - "card=\\d{12,19}"
+```
+
+Đã dùng ở: đường dẫn trong access log, message của `BusinessException`. Tự ghi log giá trị có thể nhạy cảm thì gọi `LogMasker.mask(...)`.
+
+Giới hạn: không che được stack trace mà thư viện log tự in. Đừng đặt bí mật vào message của exception.
 
 ## Ghi đè
 

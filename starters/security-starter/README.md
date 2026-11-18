@@ -52,6 +52,7 @@ OrderDto get(@PathVariable UUID id) { ... }
 | Mã quyền sai định dạng (`Order Read`, `order:*`) | **Không khởi động**, thông báo nêu lớp và method |
 | Cùng một mã nhưng hai mô tả khác nhau | **Không khởi động**. (Cùng một mã dùng ở nhiều method là bình thường; mô tả để trống không xung đột) |
 | Không có người dùng mặc định với mật khẩu sinh ngẫu nhiên | Đã chặn (`UserDetailsService` rỗng) |
+| Request trên cổng quản trị riêng của actuator (`tracing-starter`, 8081) | Cho qua không cần JWT. Cổng này không được đưa ra ngoài |
 
 Định dạng mã: `<miền>:<hành động>`, chữ thường, số, `-` (ví dụ `order:read`). Ký tự đại diện chỉ dùng khi **cấp** quyền, không dùng khi khai báo.
 

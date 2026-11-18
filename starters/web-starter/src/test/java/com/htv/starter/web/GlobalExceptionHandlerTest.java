@@ -63,6 +63,15 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    void downstreamConnectionFailureIs503WithoutDetails() throws Exception {
+        String body = mvc.perform(get("/t/downstream-down"))
+                .andExpect(status().isServiceUnavailable())
+                .andExpect(jsonPath("$.code").value("COMMON-5030"))
+                .andReturn().getResponse().getContentAsString();
+        assertThat(body).doesNotContain("secret-host");
+    }
+
+    @Test
     void validationErrorsListFields() throws Exception {
         mvc.perform(post("/t/validate").contentType(MediaType.APPLICATION_JSON).content("{\"name\":\" \"}"))
                 .andExpect(status().isBadRequest())

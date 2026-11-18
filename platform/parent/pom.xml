@@ -279,6 +279,10 @@
                                     <goal>check</goal>
                                 </goals>
                                 <configuration>
+                                    <!-- Lớp main của Spring Boot chỉ gọi SpringApplication.run: không tính coverage -->
+                                    <excludes>
+                                        <exclude>**/*Application.class</exclude>
+                                    </excludes>
                                     <rules>
                                         <rule>
                                             <element>BUNDLE</element>
