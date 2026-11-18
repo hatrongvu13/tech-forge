@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: identity-service
+  datasource:
+    # Không đặt mặc định cho mật khẩu: truyền bằng biến môi trường.
+    url: ${IDENTITY_DB_URL:jdbc:postgresql://localhost:5432/identity}
+    username: ${IDENTITY_DB_USER:identity}
+    password: ${IDENTITY_DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      # SQL (Flyway) là nguồn chính. Hibernate chỉ kiểm tra entity khớp lược đồ.
+      ddl-auto: validate
+  flyway:
+    enabled: true
