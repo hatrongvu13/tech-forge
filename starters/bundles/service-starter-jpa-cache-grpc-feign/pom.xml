@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.htv</groupId>
+        <artifactId>bundles</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>service-starter-jpa-cache-grpc-feign</artifactId>
+    <name>service-starter-jpa-cache-grpc-feign</name>
+    <description>Nền + JPA/PostgreSQL + Redis + gRPC + Feign. Dùng cho order-service.</description>
+
+    <!-- Gói jar gần rỗng (chỉ một file đánh dấu) để service khai báo đúng MỘT dependency, không cần type=pom. -->
+    <dependencies>
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>service-starter-jpa-cache-grpc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>feign-starter</artifactId>
+        </dependency>
+    </dependencies>
+</project>

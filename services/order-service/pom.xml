@@ -15,52 +15,24 @@
     <description>Nghiệp vụ đơn hàng. REST + gRPC server, phát event Kafka, gọi service khác qua Feign + Resilience4j.</description>
 
     <dependencies>
-        <!-- Contracts / shared -->
+        <!-- Một starter nhóm: web, bảo mật, tracing, JPA/PostgreSQL, Redis, gRPC, Feign -->
         <dependency>
             <groupId>com.htv</groupId>
-            <artifactId>api-model</artifactId>
+            <artifactId>service-starter-jpa-cache-grpc-feign</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.htv</groupId>
-            <artifactId>grpc-contract</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.htv</groupId>
-            <artifactId>grpc-starter</artifactId>
-        </dependency>
+
+        <!-- Phần riêng của order-service -->
         <dependency>
             <groupId>com.htv</groupId>
             <artifactId>shared-event</artifactId>
         </dependency>
-
-        <!-- Persistence -->
-        <dependency>
-            <groupId>com.htv</groupId>
-            <artifactId>jpa-starter</artifactId>
-        </dependency>
-
-        <!-- Messaging -->
+        <!-- Kafka khai báo lẻ cho đến khi có kafka-starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-kafka</artifactId>
         </dependency>
 
-        <!-- Gọi service đồng bộ + chịu lỗi -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
-        </dependency>
-
         <!-- Test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa-test</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-kafka-test</artifactId>

@@ -15,29 +15,16 @@
     <description>Định danh, đăng nhập, phát hành token. Dữ liệu PostgreSQL, session/token cache Redis.</description>
 
     <dependencies>
+        <!-- Một starter nhóm: web, bảo mật, tracing, JPA/PostgreSQL, Redis, gRPC -->
         <dependency>
             <groupId>com.htv</groupId>
-            <artifactId>shared-auth</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.htv</groupId>
-            <artifactId>cached-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.htv</groupId>
-            <artifactId>grpc-starter</artifactId>
-        </dependency>
-
-        <!-- Persistence -->
-        <dependency>
-            <groupId>com.htv</groupId>
-            <artifactId>jpa-starter</artifactId>
+            <artifactId>service-starter-jpa-cache-grpc</artifactId>
         </dependency>
 
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

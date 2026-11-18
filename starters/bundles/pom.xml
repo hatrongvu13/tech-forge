@@ -3,8 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Starter nhóm: chỉ gom dependency của starter đơn. Parent là tech-forge-parent chứ KHÔNG phải
-         starters, vì luật "starter không phụ thuộc starter khác" không áp dụng cho nhóm. -->
+    <!-- Starter nhóm: chỉ gom dependency của starter đơn, KHÔNG có code.
+         Parent là tech-forge-parent chứ KHÔNG phải starters: luật "starter không phụ thuộc starter khác"
+         không áp dụng cho nhóm.
+         Đổi công nghệ cho mọi service dùng một nhóm = sửa đúng một pom ở đây. -->
     <parent>
         <groupId>com.htv</groupId>
         <artifactId>tech-forge-parent</artifactId>
@@ -15,7 +17,25 @@
     <artifactId>bundles</artifactId>
     <packaging>pom</packaging>
     <name>bundles</name>
-    <description>Starter nhóm theo tổ hợp công nghệ. Thêm module ở M8.</description>
+    <description>Starter nhóm theo tổ hợp công nghệ.</description>
 
-    <!-- Chưa có nhóm nào: các nhóm được tạo ở mốc M8 -->
+    <modules>
+        <module>service-starter</module>
+        <module>service-starter-jpa-cache-grpc</module>
+        <module>service-starter-jpa-cache-grpc-feign</module>
+    </modules>
+
+    <dependencies>
+        <!-- Mỗi nhóm có test khởi động một service rỗng chỉ với đúng nhóm đó -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>shared-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Parent trung gian cho mọi business service (servlet/MVC).
-         Thêm service mới = thêm <module> ở đây + một pom chỉ khai báo phần riêng của service đó. -->
+    <!-- Parent trung gian cho mọi business service: plugin đóng gói, MapStruct, profile image.
+         Thêm service mới = thêm <module> ở đây + một pom khai báo MỘT starter nhóm và phần riêng của service. -->
     <parent>
         <groupId>com.htv</groupId>
         <artifactId>tech-forge-parent</artifactId>
@@ -22,32 +22,9 @@
         <module>notification-service</module>
     </modules>
 
-    <!-- Tập tối thiểu mà MỌI service cần -->
+    <!-- CHỈ những gì mọi service cần lúc biên dịch và test. Dependency lúc chạy (web, bảo mật, DB...)
+         đến từ starter nhóm mà mỗi service tự chọn. Lombok được khai báo ở tech-forge-parent. -->
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.htv</groupId>
-            <artifactId>tracing-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.htv</groupId>
-            <artifactId>security-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.htv</groupId>
-            <artifactId>shared-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
@@ -56,12 +33,7 @@
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

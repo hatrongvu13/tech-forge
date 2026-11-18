@@ -1,0 +1,1 @@
+service-starter-jpa-cache-grpc-feign: service-starter-jpa-cache-grpc, feign-starter

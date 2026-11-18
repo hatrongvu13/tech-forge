@@ -15,10 +15,20 @@
     <description>Tiêu thụ event Kafka và gửi thông báo. Không có database riêng.</description>
 
     <dependencies>
+        <!-- Không có REST, không có DB: không dùng starter nhóm, ghép starter đơn -->
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>core-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>tracing-starter</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.htv</groupId>
             <artifactId>shared-event</artifactId>
         </dependency>
+        <!-- Kafka khai báo lẻ cho đến khi có kafka-starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-kafka</artifactId>

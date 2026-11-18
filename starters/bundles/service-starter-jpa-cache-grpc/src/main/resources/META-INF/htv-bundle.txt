@@ -1,0 +1,1 @@
+service-starter-jpa-cache-grpc: service-starter, jpa-starter, cached-starter, grpc-starter

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.htv</groupId>
+        <artifactId>bundles</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>service-starter</artifactId>
+    <name>service-starter</name>
+    <description>Nền cho service REST: core + web + security + tracing.</description>
+
+    <!-- Gói jar gần rỗng (chỉ một file đánh dấu) để service khai báo đúng MỘT dependency, không cần type=pom. -->
+    <dependencies>
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>core-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>web-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>security-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>tracing-starter</artifactId>
+        </dependency>
+    </dependencies>
+</project>
