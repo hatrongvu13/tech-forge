@@ -12,12 +12,12 @@
 
     <artifactId>grpc-starter</artifactId>
     <name>grpc-starter</name>
-    <description>Auto-configuration gRPC server/client: transport, health, interceptor, metadata key, mapping lỗi.</description>
+    <description>gRPC server/client: vòng đời server, kênh client, interceptor ngữ cảnh, log, lỗi, tra quyền và đăng ký danh mục quyền.</description>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
+            <groupId>com.htv</groupId>
+            <artifactId>core-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.htv</groupId>
@@ -28,8 +28,29 @@
             <artifactId>shared-auth</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>api-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>grpc-contract</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+        </dependency>
+        <!-- Health service + reflection -->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-services</artifactId>
         </dependency>
         <!-- Netty đóng gói sẵn (shaded): không xung đột với Netty của Boot/Reactor -->
         <dependency>
@@ -37,10 +58,17 @@
             <artifactId>grpc-netty-shaded</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!-- Health service + reflection -->
+
         <dependency>
             <groupId>io.grpc</groupId>
-            <artifactId>grpc-services</artifactId>
+            <artifactId>grpc-inprocess</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Test: kiểm nhận diện exception của Spring Security theo tên lớp (không phụ thuộc lúc chạy) -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

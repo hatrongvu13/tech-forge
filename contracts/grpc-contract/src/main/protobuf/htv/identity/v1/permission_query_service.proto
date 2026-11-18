@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package htv.identity.v1;
+
+option java_multiple_files = true;
+option java_package = "com.htv.contract.identity.v1";
+
+// Service khác hỏi identity quyền của người dùng khi cache Redis không có (xem thiết kế mục 3.4).
+service PermissionQueryService {
+  // Trả các quyền đang hiệu lực (đã gộp theo role, chỉ quyền active). Có thể gồm "*" và "<miền>:*".
+  // Không có quyền nào thì trả danh sách rỗng. Người dùng không tồn tại: NOT_FOUND.
+  rpc GetUserPermissions(GetUserPermissionsRequest) returns (GetUserPermissionsResponse);
+}
+
+message GetUserPermissionsRequest {
+  string user_id = 1;  // UUID
+}
+
+message GetUserPermissionsResponse {
+  repeated string permissions = 1;
+}
