@@ -28,6 +28,24 @@ public enum CommonErrorCode implements ErrorCode {
         this.grpcStatus = grpcStatus;
     }
 
+    /** Mã chung ứng với một HTTP status (dùng khi phía bên kia không gửi mã lỗi riêng). */
+    public static CommonErrorCode forHttpStatus(int status) {
+        return switch (status) {
+            case 200 -> SUCCESS;
+            case 400 -> INVALID_REQUEST;
+            case 401 -> UNAUTHORIZED;
+            case 403 -> FORBIDDEN;
+            case 404 -> NOT_FOUND;
+            case 405 -> METHOD_NOT_ALLOWED;
+            case 409 -> CONFLICT;
+            case 415 -> UNSUPPORTED_MEDIA_TYPE;
+            case 429 -> TOO_MANY_REQUESTS;
+            case 503 -> SERVICE_UNAVAILABLE;
+            case 504 -> TIMEOUT;
+            default -> status >= 500 ? INTERNAL_ERROR : INVALID_REQUEST;
+        };
+    }
+
     @Override
     public String code() {
         return code;

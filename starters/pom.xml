@@ -20,6 +20,7 @@
     <modules>
         <module>cached-starter</module>
         <module>core-starter</module>
+        <module>feign-starter</module>
         <module>grpc-starter</module>
         <module>jpa-starter</module>
         <module>security-starter</module>

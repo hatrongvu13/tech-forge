@@ -3,6 +3,7 @@ package com.htv.starter.grpc;
 import com.htv.shared.common.BusinessException;
 import com.htv.shared.common.CommonErrorCode;
 import com.htv.shared.common.ErrorCode;
+import com.htv.shared.common.RemoteErrorCode;
 import io.grpc.Metadata;
 import io.grpc.Status;
 import io.grpc.StatusException;
@@ -121,9 +122,5 @@ public final class GrpcErrors {
             }
         }
         return false;
-    }
-
-    /** Mã lỗi của service ở xa, giữ nguyên {@code code} nhận qua trailer. */
-    record RemoteErrorCode(String code, String message, int httpStatus, int grpcStatus) implements ErrorCode {
     }
 }
