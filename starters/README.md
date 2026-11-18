@@ -18,9 +18,9 @@ Luật tầng 2 được Maven Enforcer kiểm trong `starters/pom.xml` (quy t�
 
 | Starter | Trạng thái |
 |---|---|
-| `jpa-starter` | Có README, có test khởi động |
-| `cached-starter`, `grpc-starter`, `security-starter`, `tracing-starter` | Khung rỗng. Hoàn thiện ở M3 đến M5 |
-| `core-starter`, `web-starter`, `feign-starter` | Chưa tạo (M3, M7) |
+| `jpa-starter`, `core-starter`, `web-starter`, `grpc-starter`, `cached-starter`, `security-starter` | Có README, có test khởi động |
+| `tracing-starter` | Khung rỗng |
+| `feign-starter` | Chưa tạo (M7) |
 
 ## Thêm một starter mới
 

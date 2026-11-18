@@ -47,8 +47,24 @@ public class PermissionEntity extends AuditableEntity {
         this.active = false;
     }
 
+    /** Mở lại quyền; chỉ đổi mô tả khi có mô tả mới. */
     public void activate(String description) {
         this.active = true;
-        this.description = description;
+        describe(description);
+    }
+
+    /** Đổi mô tả; mô tả rỗng nghĩa là "không có ý kiến", giữ nguyên mô tả cũ. */
+    public void describe(String description) {
+        if (description != null && !description.isBlank()) {
+            this.description = description;
+        }
+    }
+
+    /** Nhận quyền chưa có chủ (ví dụ seed tay) về cho service này. */
+    public void claimBy(String serviceName) {
+        if (this.serviceName != null && !this.serviceName.equals(serviceName)) {
+            throw new IllegalStateException("Permission " + code + " is owned by " + this.serviceName);
+        }
+        this.serviceName = serviceName;
     }
 }

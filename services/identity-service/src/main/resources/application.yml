@@ -13,3 +13,16 @@ spring:
       ddl-auto: validate
   flyway:
     enabled: true
+  data:
+    redis:
+      # Mật khẩu Redis: đặt biến môi trường SPRING_DATA_REDIS_PASSWORD (không ghi vào file).
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+htv:
+  grpc:
+    server:
+      port: ${IDENTITY_GRPC_PORT:9090}
+  cache:
+    permissions:
+      ttl: 10m

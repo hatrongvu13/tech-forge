@@ -23,6 +23,10 @@
             <groupId>com.htv</groupId>
             <artifactId>cached-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>grpc-starter</artifactId>
+        </dependency>
 
         <!-- Persistence -->
         <dependency>

@@ -12,9 +12,17 @@
 
     <artifactId>cached-starter</artifactId>
     <name>cached-starter</name>
-    <description>Auto-configuration cache + Redis (Lettuce).</description>
+    <description>Cache + Redis (Lettuce). Cài đặt đọc/ghi cache quyền của người dùng (PermissionProvider, PermissionCacheStore).</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>shared-auth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>shared-common</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
@@ -22,6 +30,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- Test: Redis thật bằng Testcontainers (cần Docker) -->
+        <dependency>
+            <groupId>com.htv</groupId>
+            <artifactId>shared-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

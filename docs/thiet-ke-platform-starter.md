@@ -1,6 +1,6 @@
 # Thiết kế: Kho starter theo nhóm và rà soát identity-service
 
-Trạng thái: **CHỜ DUYỆT LẦN CUỐI (bản 3)** (chưa viết logic, chưa sửa entity).
+Trạng thái: **ĐÃ DUYỆT (bản 3)**. Đã làm M0 đến M6.
 
 ## 0. Thay đổi so với bản 2
 
