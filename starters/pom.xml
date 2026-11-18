@@ -19,10 +19,12 @@
 
     <modules>
         <module>cached-starter</module>
+        <module>core-starter</module>
         <module>grpc-starter</module>
         <module>jpa-starter</module>
         <module>security-starter</module>
         <module>tracing-starter</module>
+        <module>web-starter</module>
         <module>bundles</module>
     </modules>
 
@@ -37,6 +39,20 @@
 
     <build>
         <plugins>
+            <!-- Sinh metadata cấu hình (additional-spring-configuration-metadata) để IDE gợi ý khóa htv.* -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths combine.children="append">
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                            <version>${spring-boot.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>

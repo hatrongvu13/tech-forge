@@ -127,6 +127,16 @@
             </dependency>
             <dependency>
                 <groupId>com.htv</groupId>
+                <artifactId>core-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.htv</groupId>
+                <artifactId>web-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.htv</groupId>
                 <artifactId>cached-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
