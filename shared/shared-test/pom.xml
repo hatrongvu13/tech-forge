@@ -12,25 +12,9 @@
 
     <artifactId>shared-test</artifactId>
     <name>shared-test</name>
-    <description>Testcontainers dùng chung (PostgreSQL, Kafka, Redis) và luật kiến trúc (ArchUnit). Chỉ khai báo scope test ở module sử dụng.</description>
+    <description>Tiện ích test dùng chung: luật kiến trúc (ArchUnit). Không dùng container (ADR-0014). Chỉ khai báo scope test ở module sử dụng.</description>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-testcontainers</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers-junit-jupiter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers-postgresql</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers-kafka</artifactId>
-        </dependency>
         <!-- Luật kiến trúc dùng chung (ArchitectureRules) -->
         <dependency>
             <groupId>com.tngtech.archunit</groupId>

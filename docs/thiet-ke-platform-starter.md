@@ -450,7 +450,7 @@ Kiểm bằng `mvn clean verify -Pci` toàn reactor (gồm test trên PostgreSQL
 | 2.1–2.4 Ba tầng, kho `starters/`, luật phụ thuộc | Xong | Enforcer chặn starter phụ thuộc service/app/starter khác |
 | 2.2 Starter đơn: core, web, security, tracing, grpc, cache, jpa, feign | Xong | Mỗi cái có README và test |
 | 2.2 `kafka-starter`, `webflux-starter` | **Chưa** (ngoài phạm vi, mục 6) | |
-| 2.3 Starter nhóm, service một dependency | Xong | M8. `EmptyServiceIT`, `EmptyFullServiceIT` |
+| 2.3 Starter nhóm, service một dependency | Xong | M8. `EmptyServiceIT` (`EmptyFullServiceIT` đã bỏ theo ADR-0014) |
 | 3.1 Ngữ cảnh qua REST, gRPC, Feign, `@Async` | Xong | |
 | 3.2 Lỗi thống nhất, mã lỗi đi xuyên service | Xong | HTTP body và trailer gRPC |
 | 3.3 Tin cậy: JWT ở biên, mTLS nội bộ, không tin `X-User-Id` | Xong | `MtlsTest` dùng chứng chỉ thật |

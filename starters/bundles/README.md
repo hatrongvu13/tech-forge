@@ -43,7 +43,7 @@ Service chỉ khai báo địa chỉ và bí mật (DB, Redis, JWT, kênh gRPC) 
 Mỗi nhóm có test khởi động một service rỗng chỉ với đúng nhóm đó:
 
 - `service-starter`: `EmptyServiceIT` (health, 401 dạng `BaseResponse`, traceparent, OpenAPI).
-- `service-starter-jpa-cache-grpc-feign`: `EmptyFullServiceIT` (PostgreSQL và Redis thật, đủ bean của mọi starter).
+- `service-starter-jpa-cache-grpc-feign`: kiểm khi chạy trên Compose (test container đã bỏ, ADR-0014).
 - `service-starter-jpa-cache-grpc`: kiểm qua `identity-service`.
 
 Mỗi nhóm là một jar gần rỗng (chỉ có `META-INF/htv-bundle.txt`), nên service khai báo như dependency thường, không cần `<type>pom</type>`.
